@@ -29,7 +29,7 @@ const Detail = () => {
   useEffect(() => {
     // get movie info and movie's posts
     axios
-      .post("http://localhost:3001/searchById", id)
+      .post("https://react-movie-justinl.herokuapp.com/searchById", id)
       .then((response) => {
         if (response.data.error) {
           console.log(response.data.error);
@@ -46,7 +46,7 @@ const Detail = () => {
     // check movie rating
     axios
       .post(
-        "http://localhost:3001/checkMovieRate",
+        "http://react-movie-justinl.herokuapp.com/checkMovieRate",
         {
           mid: movieid,
         },
@@ -71,7 +71,7 @@ const Detail = () => {
     // post comment and validate
     console.log(content);
     axios
-      .post("http://localhost:3001/postComment", id, {
+      .post("http://react-movie-justinl.herokuapp.com/postComment", id, {
         headers: { accessToken: sessionStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -93,7 +93,7 @@ const Detail = () => {
   const handleDelete = (pid) => {
     axios
       .post(
-        "http://localhost:3001/deletePost",
+        "http://react-movie-justinl.herokuapp.com/deletePost",
         { pid: pid, mid: movieid },
         {
           headers: { accessToken: sessionStorage.getItem("accessToken") },
@@ -114,7 +114,7 @@ const Detail = () => {
   const handleRating = (event, newValue) => {
     axios
       .post(
-        "http://localhost:3001/rateMovie",
+        "http://react-movie-justinl.herokuapp.com/rateMovie",
         {
           mid: movieid,
           rating: newValue,

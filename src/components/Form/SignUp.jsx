@@ -62,7 +62,7 @@ const SignUp = () => {
       // axios posts to database
       values.isAdmin = isAdmin;
       axios
-        .post("http://localhost:3001/registration", values)
+        .post("http://react-movie-justinl.herokuapp.com/registration", values)
         .then((response) => {
           console.log(response.data);
           if (response.data.result === "Registration success") {
