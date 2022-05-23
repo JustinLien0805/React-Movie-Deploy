@@ -14,7 +14,7 @@ const Home = () => {
 
   const searchMovie = async (movieName) => {
     await axios
-      .post("http://react-movie-justinl.herokuapp.com/search", movieName)
+      .post("https://react-movie-justinl.herokuapp.com/search", movieName)
       .then((response) => {
         setMovies(response.data);
         console.log(response.data);
@@ -30,7 +30,7 @@ const Home = () => {
   // get movie's score
   useEffect(async () => {
     const promises = movies.map(async (movie) => {
-      const score = await axios.post("http://react-movie-justinl.herokuapp.com/avg", {
+      const score = await axios.post("https://react-movie-justinl.herokuapp.com/avg", {
         mid: movie.movie_id,
       });
       console.log(score);

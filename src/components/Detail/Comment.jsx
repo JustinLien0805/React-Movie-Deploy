@@ -45,7 +45,7 @@ const Comment = ({ info, handleDelete }) => {
   const [likes, setLikes] = useState(0);
   useEffect(() => {
     axios
-      .post("http://react-movie-justinl.herokuapp.com/postUsername", id)
+      .post("https://react-movie-justinl.herokuapp.com/postUsername", id)
       .then((response) => {
         setUsername(response.data.username);
       })
@@ -56,7 +56,7 @@ const Comment = ({ info, handleDelete }) => {
     // check if user like the post
     axios
       .post(
-        "http://react-movie-justinl.herokuapp.com/checkLike",
+        "https://react-movie-justinl.herokuapp.com/checkLike",
         { pid: info.post_id },
         {
           headers: { accessToken: sessionStorage.getItem("accessToken") },
@@ -72,7 +72,7 @@ const Comment = ({ info, handleDelete }) => {
       });
     // total likes
     axios
-      .post("http://react-movie-justinl.herokuapp.com/totalLikes", { pid: info.post_id })
+      .post("https://react-movie-justinl.herokuapp.com/totalLikes", { pid: info.post_id })
       .then((response) => {
         console.log(response.data);
         setLikes(response.data[0].likes);
@@ -84,7 +84,7 @@ const Comment = ({ info, handleDelete }) => {
     if (newValue === 1) {
       axios
         .post(
-          "http://react-movie-justinl.herokuapp.com/likePost",
+          "https://react-movie-justinl.herokuapp.com/likePost",
           { pid: info.post_id },
           {
             headers: { accessToken: sessionStorage.getItem("accessToken") },
@@ -103,7 +103,7 @@ const Comment = ({ info, handleDelete }) => {
       //remove Like
       axios
         .post(
-          "http://react-movie-justinl.herokuapp.com/removeLike",
+          "https://react-movie-justinl.herokuapp.com/removeLike",
           { pid: info.post_id },
           {
             headers: { accessToken: sessionStorage.getItem("accessToken") },
@@ -123,7 +123,7 @@ const Comment = ({ info, handleDelete }) => {
 
   useEffect(() => {
     axios
-      .post("http://react-movie-justinl.herokuapp.com/totalLikes", { pid: info.post_id })
+      .post("https://react-movie-justinl.herokuapp.com/totalLikes", { pid: info.post_id })
       .then((response) => {
         console.log(response.data);
         setLikes(response.data[0].likes);

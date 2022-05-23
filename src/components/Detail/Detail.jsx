@@ -46,7 +46,7 @@ const Detail = () => {
     // check movie rating
     axios
       .post(
-        "http://react-movie-justinl.herokuapp.com/checkMovieRate",
+        "https://react-movie-justinl.herokuapp.com/checkMovieRate",
         {
           mid: movieid,
         },
@@ -71,7 +71,7 @@ const Detail = () => {
     // post comment and validate
     console.log(content);
     axios
-      .post("http://react-movie-justinl.herokuapp.com/postComment", id, {
+      .post("https://react-movie-justinl.herokuapp.com/postComment", id, {
         headers: { accessToken: sessionStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -93,7 +93,7 @@ const Detail = () => {
   const handleDelete = (pid) => {
     axios
       .post(
-        "http://react-movie-justinl.herokuapp.com/deletePost",
+        "https://react-movie-justinl.herokuapp.com/deletePost",
         { pid: pid, mid: movieid },
         {
           headers: { accessToken: sessionStorage.getItem("accessToken") },
@@ -114,7 +114,7 @@ const Detail = () => {
   const handleRating = (event, newValue) => {
     axios
       .post(
-        "http://react-movie-justinl.herokuapp.com/rateMovie",
+        "https://react-movie-justinl.herokuapp.com/rateMovie",
         {
           mid: movieid,
           rating: newValue,
