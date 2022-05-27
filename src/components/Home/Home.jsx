@@ -8,10 +8,24 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [movieName, setMovieName] = useState("");
   const [avgs, setAvgs] = useState([]);
-  // default value will be leaderboard
+  // default value will be recommandation
   const [movies, setMovies] = useState([]);
   let navigate = useNavigate();
   const genre = ["Action", "Romance", "Sci-Fi", "Comedy", "Drama"];
+
+  // get recommandation
+  useEffect(async () => {
+    axios
+      .get("https://react-movie-justinl.herokuapp.com/recommand")
+      .then((response) => {
+        setMovies(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const searchMovie = async (movieName) => {
     await axios
       .post("https://react-movie-justinl.herokuapp.com/search", movieName)
