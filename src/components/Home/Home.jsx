@@ -21,7 +21,7 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-  const genre = ["Action", "Romance", "Sci-Fi", "Comedy", "Drama"];
+  const genre = ["Action", "Romance", "Sci-Fi", "Comedy", "Horror"];
 
   // get recommandation
   useEffect(async () => {
