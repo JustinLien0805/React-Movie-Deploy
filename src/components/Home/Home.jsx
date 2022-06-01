@@ -5,11 +5,21 @@ import "../..//App.css";
 import axios from "axios";
 import { Box, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
+const loaderCSS = css`
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+`;
+
 const Home = () => {
   const [movieName, setMovieName] = useState("");
   const [avgs, setAvgs] = useState([]);
   // default value will be recommandation
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   const genre = ["Action", "Romance", "Sci-Fi", "Comedy", "Drama"];
 
@@ -27,13 +37,18 @@ const Home = () => {
   }, []);
 
   const searchMovie = async (movieName) => {
+    setLoading(true);
     await axios
-      .post("https://react-movie-justinl.herokuapp.com/search", movieName)
+      .post("https://react-movie-justinl.herokuapp.com/search", {
+        movieName: movieName,
+      })
       .then((response) => {
+        setLoading(false)
         setMovies(response.data);
         console.log(response.data);
       })
       .catch((error) => {
+        setLoading(false)
         console.log(error);
       });
   };
@@ -66,15 +81,18 @@ const Home = () => {
   };
 
   const findMovieByGenre = async (e) => {
+    setLoading(true)
     await axios
       .post("https://react-movie-justinl.herokuapp.com/genre", {
         genre: e.currentTarget.value,
       })
       .then((response) => {
+        setLoading(false)
         setMovies(response.data);
         console.log(response.data);
       })
       .catch((error) => {
+        setLoading(false)
         console.log(error);
       });
   };
@@ -169,6 +187,12 @@ const Home = () => {
           </Button>
         ))}
       </Box>
+      <HashLoader
+           css={loaderCSS}
+           color={"white"}
+           loading={loading}
+           size={150}
+         />
       {movieName.length >= 0 && movies?.length > 0 ? (
         <div className="container">
           {movies.map((movie, index) => (

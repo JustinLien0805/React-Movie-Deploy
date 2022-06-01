@@ -9,6 +9,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
+const loaderCSS = css`
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+`;
 
 const validationSchema = yup.object({
   email: yup
@@ -33,6 +41,7 @@ const validationSchema = yup.object({
 });
 
 const SignUp = () => {
+  const [loading, setLoading] = useState(false);
   const theme = createTheme({
     palette: {
       primary: {
@@ -60,11 +69,13 @@ const SignUp = () => {
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
       // axios posts to database
+      setLoading(true);
       values.isAdmin = isAdmin;
       axios
         .post("https://react-movie-justinl.herokuapp.com/registration", values)
         .then((response) => {
           console.log(response.data);
+          setLoading(false)
           if (response.data.result === "Registration success") {
             alert("register success");
             navigate("/");
@@ -73,6 +84,7 @@ const SignUp = () => {
           }
         })
         .catch((error) => {
+          setLoading(false)
           console.error(error);
         });
     },
@@ -92,6 +104,12 @@ const SignUp = () => {
         autoComplete="off"
         onSubmit={formik.handleSubmit}
       >
+        <HashLoader
+           css={loaderCSS}
+           color={"white"}
+           loading={loading}
+           size={150}
+         />
         <ThemeProvider theme={theme}>
           <Typography variant="h1" align="center" sx={{ mb: 7 }}>
             Movie

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
@@ -10,6 +10,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { AdminContext } from "../Helper/Context";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
 
 const EmailTextField = styled(TextField)({
   label: {
@@ -69,9 +71,17 @@ const validationSchema = yup.object({
     .required("Password is required"),
 });
 
+const loaderCSS = css`
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+`;
+
 const Login = () => {
   let navigate = useNavigate();
   const [admin, setAdmin] = useContext(AdminContext);
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -80,15 +90,15 @@ const Login = () => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       // axios posts to database
+      setLoading(true);
       axios
         .post("https://react-movie-justinl.herokuapp.com/login", values)
         .then((response) => {
-          console.log(response.data.is_Admin);
+          setLoading(false);
           if (response.data.result === "successful login") {
             alert("login success");
             navigate("/movie");
             sessionStorage.setItem("accessToken", response.data.accessToken);
-            // sessionStorage.setItem("userId", response.data.userId)
             setAdmin(response.data.is_Admin);
           } else {
             alert(response.data.result);
@@ -117,6 +127,12 @@ const Login = () => {
         <Typography variant="h1" align="center" sx={{ mb: 10 }}>
           Movie
         </Typography>
+        <HashLoader
+          css={loaderCSS}
+          color={"white"}
+          loading={loading}
+          size={150}
+        />
         <EmailTextField
           type="text"
           label="Email"

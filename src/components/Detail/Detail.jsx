@@ -14,12 +14,22 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HashLoader from "react-spinners/HashLoader";
+import { css } from "@emotion/react";
+const loaderCSS = css`
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+`;
+
 const Detail = () => {
   let { movieid } = useParams();
   const [movie, setMovie] = useState([]);
   const [posts, setPosts] = useState([]);
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(0);
+  const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   var id = {
     mid: movieid,
@@ -28,9 +38,11 @@ const Detail = () => {
   };
   useEffect(() => {
     // get movie info and movie's posts
+    setLoading(true)
     axios
       .post("https://react-movie-justinl.herokuapp.com/searchById", id)
       .then((response) => {
+        setLoading(false)
         if (response.data.error) {
           console.log(response.data.error);
         } else {
@@ -69,12 +81,13 @@ const Detail = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // post comment and validate
-    console.log(content);
+    setLoading(true);
     axios
       .post("https://react-movie-justinl.herokuapp.com/postComment", id, {
         headers: { accessToken: sessionStorage.getItem("accessToken") },
       })
       .then((response) => {
+        setLoading(false);
         if (response.data.result) {
           console.log(response.data.result);
           alert("Error: user didn't login");
@@ -91,6 +104,7 @@ const Detail = () => {
 
   // deletePost
   const handleDelete = (pid) => {
+    setLoading(true);
     axios
       .post(
         "https://react-movie-justinl.herokuapp.com/deletePost",
@@ -100,6 +114,7 @@ const Detail = () => {
         }
       )
       .then((response) => {
+        setLoading(false)
         if (response.data.result) {
           console.log(response.data.result);
           alert("Error: user didn't login");
@@ -147,6 +162,12 @@ const Detail = () => {
         mt={3}
         style={{ width: "1000px" }}
       >
+        <HashLoader
+           css={loaderCSS}
+           color={"white"}
+           loading={loading}
+           size={150}
+         />
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
           <Box
