@@ -180,7 +180,7 @@ const Detail = () => {
               justifyContent: "center",
             }}
           >
-            <Typography variant="h1">Movie</Typography>
+            <Typography variant="h1">Movid-19</Typography>
           </Box>
         </Grid>
         <Grid item xs={2}>

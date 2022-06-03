@@ -125,7 +125,7 @@ const Login = () => {
         onSubmit={formik.handleSubmit}
       >
         <Typography variant="h1" align="center" sx={{ mb: 10 }}>
-          Movie
+          Movid-19
         </Typography>
         <HashLoader
           css={loaderCSS}

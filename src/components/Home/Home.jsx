@@ -110,7 +110,7 @@ const Home = () => {
                 justifyContent: "center",
               }}
             >
-              <h1>Movie Search</h1>
+              <h1>Movid-19</h1>
             </Box>
           </Grid>
           <Grid item xs={3}>

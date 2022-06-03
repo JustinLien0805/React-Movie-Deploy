@@ -112,7 +112,7 @@ const SignUp = () => {
          />
         <ThemeProvider theme={theme}>
           <Typography variant="h1" align="center" sx={{ mb: 7 }}>
-            Movie
+            Movid-19
           </Typography>
           <TextField
             type="text"
